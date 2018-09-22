@@ -1,0 +1,17 @@
+elasticjob:
+  serverlists: 127.0.0.1:2181
+  namespace: boot-job
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+  #  自动创建更新验证数据库结构
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: mysql
