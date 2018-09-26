@@ -101,12 +101,12 @@ public class ZkNodeCreateOperator implements Watcher {
     }
 
     /**
-     * @Title: ZKOperatorDemo.java
-     * @Description: 创建zk节点
+     * ZKOperatorDemo.java
+     * 创建zk节点
      */
     public void asyncCreateZKNode(String path, byte[] data, List<ACL> acls) {
         try {
-            // 异步步创建zk节点，节点类型为持久节点
+            // todo: 异步步创建zk节点，节点类型为持久节点
             String ctx = "{'create':'success'}";
             zooKeeper.create(path, data, acls, CreateMode.PERSISTENT, new CreateCallBack(), ctx);
 
@@ -117,12 +117,12 @@ public class ZkNodeCreateOperator implements Watcher {
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         ZkNodeCreateOperator zkServer = new ZkNodeCreateOperator(zkServerIp);
 
         // 同步 创建zk节点
         // zkServer.createZKNode("/testNode", "testNode-data".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
         // 异步
-        zkServer.createZKNode("/testNode", "testNode-data".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
+        zkServer.asyncCreateZKNode("/testNode", "testNode-data".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
     }
 }

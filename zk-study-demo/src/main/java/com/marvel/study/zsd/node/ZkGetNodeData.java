@@ -50,9 +50,9 @@ public class ZkGetNodeData implements Watcher {
          * watch：true或者false，注册一个watch事件
          * stat：状态，我们可以通过这个对象获取节点的状态信息
          */
-        byte[] resByte = zooKeeper.getData("/testNode", true, stat);
+        byte[] resByte = zooKeeper.getData("/zk", true, stat);
         String result = new String(resByte);
-        System.out.println("/testNode 节点的数据: " + result);
+        System.out.println("/zk 节点的数据: " + result);
 
         zooKeeper.close();
     }
