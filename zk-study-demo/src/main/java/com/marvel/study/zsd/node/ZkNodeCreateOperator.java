@@ -67,6 +67,7 @@ public class ZkNodeCreateOperator implements Watcher {
      */
     @Override
     public void process(WatchedEvent watchedEvent) {
+        System.out.println("事件通知：" + watchedEvent);
         logger.warn("接收到watch通知：{}", watchedEvent);
     }
 
@@ -117,12 +118,14 @@ public class ZkNodeCreateOperator implements Watcher {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ZkNodeCreateOperator zkServer = new ZkNodeCreateOperator(zkServerIp);
 
         // 同步 创建zk节点
         // zkServer.createZKNode("/testNode", "testNode-data".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
         // 异步
         zkServer.asyncCreateZKNode("/testNode", "testNode-data".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
+
+        Thread.sleep(100000L);
     }
 }

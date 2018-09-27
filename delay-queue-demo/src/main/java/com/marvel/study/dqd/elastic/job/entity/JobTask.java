@@ -1,6 +1,7 @@
 package com.marvel.study.dqd.elastic.job.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,6 +17,7 @@ import javax.persistence.*;
 @Table(name = "JOB_TASK")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class JobTask {
     @Id
     @GeneratedValue
@@ -31,9 +33,4 @@ public class JobTask {
     @Column(name = "send_time")
     private Long sendTime;
 
-    public JobTask(String content, Integer status, Long sendTime) {
-        this.content = content;
-        this.status = status;
-        this.sendTime = sendTime;
-    }
 }

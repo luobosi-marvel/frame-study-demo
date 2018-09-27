@@ -20,5 +20,13 @@
             <artifactId>zookeeper</artifactId>
             <version>3.4.11</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-recipes -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
     </dependencies>
 </project>
