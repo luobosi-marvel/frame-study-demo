@@ -10,6 +10,8 @@ import java.util.List;
 
 /**
  * FifoZooKeeper
+ *        在/queue-fifo的目录下创建 SEQUENTIAL 类型的子目录 /x(i)，这样就能保证所有成员加入队列时都是有编号的，
+ *        出队列时通过 getChildren( ) 方法可以返回当前所有的队列中的元素，然后消费其中最小的一个，这样就能保证FIFO。
  *
  * @author luobosi@2dfire.com
  * @since 2018-09-29
