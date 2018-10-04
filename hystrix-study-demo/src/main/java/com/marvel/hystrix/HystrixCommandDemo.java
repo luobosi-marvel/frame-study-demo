@@ -13,36 +13,36 @@ import com.netflix.hystrix.*;
  */
 public class HystrixCommandDemo extends HystrixCommand<String> {
 
-    private final String name;
 
-    public HystrixCommandDemo(String name) {
-//		super(HystrixCommandGroupKey.Factory.asKey("ExampleGroup"));
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("testCommandGroupKey"))
-                .andCommandKey(HystrixCommandKey.Factory.asKey("testCommandKey"))
-                /* 使用HystrixThreadPoolKey工厂定义线程池名称*/
-                .andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey("testThreadPool"))
+    public HystrixCommandDemo() {
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("test"))
                 .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
-//                		.withExecutionIsolationStrategy(ExecutionIsolationStrategy.SEMAPHORE)	// 信号量隔离
-                        .withExecutionTimeoutInMilliseconds(5000)));
-//		HystrixCommandProperties.Setter().withCircuitBreakerEnabled(true);
-//		HystrixCollapserProperties.Setter()
-//		HystrixThreadPoolProperties.Setter().withCoreSize(1);
-        this.name = name;
+                        // 开启熔断模式
+                        .withCircuitBreakerEnabled(true)
+                        // 出现错误的比率超过 30% 就开启熔断
+                        .withCircuitBreakerErrorThresholdPercentage(30)
+                        // 至少有 10 个请求才进行 errorThresholdPercentage 错误百分比计算
+                        .withCircuitBreakerRequestVolumeThreshold(10)
+                        // 半开试探休眠时间，这里设置为 3 秒
+                        .withExecutionTimeoutInMilliseconds(3000)
+                )
+
+        );
+    }
+    @Override
+    protected String getFallback() {
+        //当外部请求超时后，会执行fallback里的业务逻辑
+        System.out.println("执行了回退方法");
+        return "error";
     }
 
-//	@Override
-//  protected String getFallback() {
-//		System.out.println("触发了降级!");
-//      return "exeucute fallback";
-//  }
 
     @Override
     protected String run() throws InterruptedException {
-//		for (int i = 0; i < 10; i++) {
-//			System.out.println("runing HelloWorldHystrixCommand..." + i);
-//		}
-//
-//		TimeUnit.MILLISECONDS.sleep(2000);
-        return "Hello " + name + "! thread:" + Thread.currentThread().getName();
+        //模拟外部请求需要的时间长度
+        System.out.println("执行了run方法");
+        Thread.sleep(2000);
+        return "sucess";
+
     }
 }

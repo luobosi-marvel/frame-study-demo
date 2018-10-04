@@ -10,7 +10,20 @@ package com.marvel.hystrix;
  * @since 2018-10-04
  */
 public class Main {
-    public static void main(String[] args) {
-        System.out.println(1);
+
+
+    public static void main(String[] args) throws InterruptedException {
+
+        for (int i = 0; i < 30; i++) {
+        HystrixCommandDemo command = new HystrixCommandDemo();
+            String result = command.execute();
+            System.out.println(result);
+            System.out.println("circuit Breaker is open : " + command.isCircuitBreakerOpen());
+            if (command.isCircuitBreakerOpen()) {
+                Thread.sleep(50);
+            }
+        }
+
+
     }
 }
