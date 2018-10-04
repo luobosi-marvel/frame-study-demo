@@ -44,6 +44,8 @@ public class HystrixCommandDemo extends HystrixCommand<String> {
         4. 线程池/信号量已满：以demo为例，我们配置线程池数目为3，然后先用一个for循环执行queue()，触发的run()sleep 2s，
             然后再用第2个for循环执行execute()，发现所有execute()都触发了fallback，这是因为第1个for的线程还在sleep，
             占用着线程池所有线程，导致第2个for的所有命令都无法获取到线程
+
+       调用程序可以通过isResponseFromFallback()查询结果是由run()/construct()还是getFallback()/resumeWithFallback()返回的
      */
     @Override
     protected String getFallback() {
