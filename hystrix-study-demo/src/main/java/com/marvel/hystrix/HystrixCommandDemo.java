@@ -23,8 +23,8 @@ public class HystrixCommandDemo extends HystrixCommand<String> {
                         .withCircuitBreakerErrorThresholdPercentage(30)
                         // 至少有 10 个请求才进行 errorThresholdPercentage 错误百分比计算
                         .withCircuitBreakerRequestVolumeThreshold(10)
-                        // 半开试探休眠时间，这里设置为 3 秒
-                        .withExecutionTimeoutInMilliseconds(3000)
+                        // 半开试探休眠时间，这里设置为 1 秒, 如果 run 方法超时 1s 则会触发回退方法
+                        .withExecutionTimeoutInMilliseconds(1000)
                 )
 
         );

@@ -15,7 +15,9 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
 
         for (int i = 0; i < 30; i++) {
-        HystrixCommandDemo command = new HystrixCommandDemo();
+            // todo：每个 Command 对象只能调用一次，不可以重复调用，
+            // 重复调用对应异常信息：This instance can only be executed once. Please instantiate a new instance.
+            HystrixCommandDemo command = new HystrixCommandDemo();
             String result = command.execute();
             System.out.println(result);
             System.out.println("circuit Breaker is open : " + command.isCircuitBreakerOpen());
