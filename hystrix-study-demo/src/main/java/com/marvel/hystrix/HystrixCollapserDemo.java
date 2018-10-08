@@ -57,7 +57,7 @@ public class HystrixCollapserDemo extends HystrixCollapser<List<String>, String,
 
         @Override
         protected List<String> run() {
-            ArrayList<String> response = new ArrayList<String>();
+            ArrayList<String> response = new ArrayList<>();
             // 处理每个请求，返回结果
             for (CollapsedRequest<String, Integer> request : requests) {
                 // artificial response for each argument received in the batch
