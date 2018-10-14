@@ -22,6 +22,7 @@
         <!-- zk 相关 demo 练习-->
         <module>zk-study-demo</module>
         <module>hystrix-study-demo</module>
+        <module>sentinel-study-demo</module>
     </modules>
 
     <dependencies>
