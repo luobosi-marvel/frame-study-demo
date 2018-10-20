@@ -24,6 +24,7 @@ public class HelloWorld {
         initFlowRules();
         int i = 0;
         do {
+            // Entry 就相当于 Hystrix 里面的 HystrixCommand，那么 entry key 就相当于一个 command key 了
             Entry entry = null;
             try {
                 entry = SphU.entry("HelloWorld");
@@ -57,7 +58,9 @@ public class HelloWorld {
     private static void initFlowRules() {
         List<FlowRule> rules = new ArrayList<>();
         FlowRule rule = new FlowRule();
+        // 设置资源名
         rule.setResource("HelloWorld");
+        //
         rule.setGrade(RuleConstant.FLOW_GRADE_QPS);
         // Set limit QPS to 20. 设置请求流量为 20
         rule.setCount(20);
