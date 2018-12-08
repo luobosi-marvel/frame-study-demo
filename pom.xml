@@ -23,6 +23,8 @@
         <module>zk-study-demo</module>
         <module>hystrix-study-demo</module>
         <module>sentinel-study-demo</module>
+        <module>dyno-queues-demo</module>
+        <module>delay-queue-demo</module>
     </modules>
 
     <dependencies>
