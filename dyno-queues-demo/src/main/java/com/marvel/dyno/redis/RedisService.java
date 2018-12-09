@@ -3,14 +3,16 @@
  */
 package com.marvel.dyno.redis;
 
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * RedisService
@@ -79,6 +81,129 @@ public class RedisService {
     public Object getObject(String key) {
         ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
         return valueOperations.get(key);
+    }
+
+    ///////////////////////////////////// hash 操作 /////////////////////////////////////
+
+    /**
+     * 设置hash 的某个值
+     *
+     * @param key
+     * @param field
+     * @param value
+     * @param expireSecond
+     * @return
+     */
+    public void hset(String key, String field, String value, int expireSecond) {
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+
+        hashOperations.put(key, field, value);
+        if (expireSecond != -1) {
+            redisTemplate.expire(key, expireSecond, TimeUnit.SECONDS);
+        }
+    }
+
+    /**
+     * 将哈希表 key 中的域 field 的值设置为 value ，当且仅当域 field 不存在。
+     * 若域 field 已经存在，该操作无效
+     *
+     * @param key
+     * @param field
+     * @param value
+     * @param expireSecond
+     * @return 设置成功，返回 1 。如果给定域已经存在且没有操作被执行，返回 0 。
+     */
+    public boolean hsetnx(String key, String field, String value, int expireSecond) {
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+
+        boolean flag = hashOperations.putIfAbsent(key, field, value);
+        if (flag && expireSecond != -1) {
+            redisTemplate.expire(key, expireSecond, TimeUnit.SECONDS);
+        }
+        return flag;
+    }
+
+    /**
+     * set hash map
+     *
+     * @param key
+     * @param hash
+     * @param expireSecond 过期秒数
+     */
+    public void hmset(String key, Map<String, String> hash, int expireSecond) {
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        hashOperations.putAll(key, hash);
+        if (expireSecond != -1) {
+            redisTemplate.expire(key, expireSecond, TimeUnit.SECONDS);
+        }
+    }
+
+
+    /**
+     * 删除hash 中的某个field
+     *
+     * @param key
+     * @param fields
+     * @return
+     */
+    public long hdel(String key, String... fields) {
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        return hashOperations.delete(key, (Object) fields);
+    }
+
+
+    /**
+     * 返回多个hash value
+     *
+     * @param key
+     * @param fields
+     * @return
+     */
+    public List<String> hmget(String key, List<String> fields) {
+
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        List<Object> list = hashOperations.multiGet(key, Collections.singleton(fields));
+        if (list.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return list.stream().map(value -> (String) value).collect(Collectors.toList());
+    }
+
+    /**
+     * 返回指定hash的field数量
+     *
+     * @param key
+     * @return
+     */
+    public Long hlen(String key) {
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        return hashOperations.size(key);
+    }
+
+    /**
+     * 查看哈希表 key 中，给定域 field 是否存在。
+     *
+     * @param key
+     * @param field
+     * @return 如果哈希表含有给定域，返回 true 。如果哈希表不含有给定域，或 key 不存在，返回 false 。
+     */
+    public Boolean hexists(String key, String field) {
+        return false;
+    }
+
+    /**
+     * 返回哈希表 key 中的所有域。
+     *
+     * @param key
+     * @return
+     */
+    public Set<String> hkeys(String key) {
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        Set<Object> valueSet = hashOperations.keys(key);
+        if (valueSet.isEmpty()) {
+            return new HashSet<>();
+        }
+        return valueSet.stream().map(value -> (String) value).collect(Collectors.toSet());
     }
 
 

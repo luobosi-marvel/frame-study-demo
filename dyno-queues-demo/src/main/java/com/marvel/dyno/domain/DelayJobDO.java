@@ -8,14 +8,14 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * DelayQueueDO
+ * DelayJobDO
  * 延迟队列 入参实体
  *
  * @author luobosi@2dfire.com
  * @since 2018-12-08
  */
 @Data
-public class DelayQueueDO implements Serializable {
+public class DelayJobDO implements Serializable {
 
     /**
      * Job唯一标识

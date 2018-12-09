@@ -21,6 +21,22 @@
 
     <dependencies>
 
+        <!-- https://mvnrepository.com/artifact/org.rarefiedredis.redis/redis-java -->
+        <dependency>
+            <groupId>org.rarefiedredis.redis</groupId>
+            <artifactId>redis-java</artifactId>
+            <version>0.0.17</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
