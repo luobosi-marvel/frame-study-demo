@@ -1,5 +1,6 @@
 package com.marvel.dyno;
 
+import com.marvel.dyno.domain.DelayJobDO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,18 @@ public class DynoQueuesDemoApplicationTests {
 		System.out.println("useRedisDao = " + valueOperations.get("hello"));
 	}
 
+
+	@Test
+	public void testDO() {
+		DelayJobDO delayJobDO = new DelayJobDO();
+		delayJobDO.setId(1L);
+		delayJobDO.setReferenceTime(System.currentTimeMillis());
+		delayJobDO.setDelay(10);
+		delayJobDO.setTopic("marvel");
+		delayJobDO.setTtr(1);
+		delayJobDO.setBody("{\"message\":\"some message\"}");
+		System.out.println(delayJobDO.toString());
+	}
 
 	@Test
 	public void contextLoads() {

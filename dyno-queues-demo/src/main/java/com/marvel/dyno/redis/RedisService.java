@@ -95,7 +95,7 @@ public class RedisService {
      * @return
      */
     public void hset(String key, String field, String value, int expireSecond) {
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
         hashOperations.put(key, field, value);
         if (expireSecond != -1) {
@@ -114,7 +114,7 @@ public class RedisService {
      * @return 设置成功，返回 1 。如果给定域已经存在且没有操作被执行，返回 0 。
      */
     public boolean hsetnx(String key, String field, String value, int expireSecond) {
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
 
         boolean flag = hashOperations.putIfAbsent(key, field, value);
         if (flag && expireSecond != -1) {
@@ -131,7 +131,7 @@ public class RedisService {
      * @param expireSecond 过期秒数
      */
     public void hmset(String key, Map<String, String> hash, int expireSecond) {
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
         hashOperations.putAll(key, hash);
         if (expireSecond != -1) {
             redisTemplate.expire(key, expireSecond, TimeUnit.SECONDS);
@@ -147,8 +147,8 @@ public class RedisService {
      * @return
      */
     public long hdel(String key, String... fields) {
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
-        return hashOperations.delete(key, (Object) fields);
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+        return hashOperations.delete(key, fields);
     }
 
 
@@ -161,12 +161,8 @@ public class RedisService {
      */
     public List<String> hmget(String key, List<String> fields) {
 
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
-        List<Object> list = hashOperations.multiGet(key, Collections.singleton(fields));
-        if (list.isEmpty()) {
-            return new ArrayList<>();
-        }
-        return list.stream().map(value -> (String) value).collect(Collectors.toList());
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+        return hashOperations.multiGet(key, fields);
     }
 
     /**
@@ -176,7 +172,7 @@ public class RedisService {
      * @return
      */
     public Long hlen(String key) {
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
         return hashOperations.size(key);
     }
 
@@ -198,12 +194,8 @@ public class RedisService {
      * @return
      */
     public Set<String> hkeys(String key) {
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
-        Set<Object> valueSet = hashOperations.keys(key);
-        if (valueSet.isEmpty()) {
-            return new HashSet<>();
-        }
-        return valueSet.stream().map(value -> (String) value).collect(Collectors.toSet());
+        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+        return hashOperations.keys(key);
     }
 
 
@@ -217,7 +209,7 @@ public class RedisService {
      * @param value value
      * @return 1:成功 0:不成功
      */
-    public boolean zadd(String key, double score, String value) {
+    public boolean zadd(String key, double score, Object value) {
         ZSetOperations<String, Object> zSetOperations = redisTemplate.opsForZSet();
         return zSetOperations.add(key, value, score);
     }
