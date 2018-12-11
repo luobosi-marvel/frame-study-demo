@@ -4,7 +4,7 @@
 package com.marvel.dyno.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.marvel.dyno.domain.DelayJobDO;
+import com.marvel.dyno.domain.DelayMessageDO;
 import com.marvel.dyno.redis.RedisService;
 import com.marvel.dyno.util.DateUtils;
 import org.springframework.web.bind.annotation.*;
@@ -28,18 +28,18 @@ public class DelayJobController {
     private RedisService redisService;
 
     @PostMapping("add")
-    public DelayJobDO addJob(@RequestBody DelayJobDO delayJobDO) {
+    public DelayMessageDO addJob(@RequestBody DelayMessageDO delayMessageDO) {
 
         redisService.zadd(
-                this.getJobKey(delayJobDO.getTopic()),
-                DateUtils.calculationDelayTime(delayJobDO.getReferenceTime(), delayJobDO.getDelay(), TimeUnit.SECONDS),
-                this.getValue(delayJobDO.getId()));
+                this.getJobKey(delayMessageDO.getTopic()),
+                DateUtils.calculationDelayTime(delayMessageDO.getReferenceTime(), delayMessageDO.getDelay(), TimeUnit.SECONDS),
+                this.getValue(delayMessageDO.getId()));
 
-        redisService.hset(getJobHashKey(delayJobDO.getTopic(), delayJobDO.getId()), this.getValue(delayJobDO.getId()), delayJobDO.toString(), -1);
+        redisService.hset(getJobHashKey(delayMessageDO.getTopic(), delayMessageDO.getId()), this.getValue(delayMessageDO.getId()), delayMessageDO.toString(), -1);
 
-        List<String> jsonString = redisService.hmget(getJobHashKey(delayJobDO.getTopic(), delayJobDO.getId()), Collections.singletonList("" + delayJobDO.getId()));
+        List<String> jsonString = redisService.hmget(getJobHashKey(delayMessageDO.getTopic(), delayMessageDO.getId()), Collections.singletonList("" + delayMessageDO.getId()));
 
-        return JSON.parseObject(jsonString.get(0), DelayJobDO.class);
+        return JSON.parseObject(jsonString.get(0), DelayMessageDO.class);
     }
 
 

@@ -22,6 +22,6 @@ public class DateUtils {
      * @return 任务具体执行的时间
      */
     public static double calculationDelayTime(Long referenceTime, Integer delay, TimeUnit timeUnit) {
-        return Double.parseDouble("" + (referenceTime + timeUnit.toMillis(delay)));
+        return Double.parseDouble("" + (referenceTime + timeUnit.toSeconds(delay)));
     }
 }
