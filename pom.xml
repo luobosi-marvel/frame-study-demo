@@ -26,6 +26,7 @@
         <module>dyno-queues-demo</module>
         <module>delay-queue-demo</module>
         <module>marvel-redis</module>
+        <module>time-wheel-demo</module>
     </modules>
 
     <dependencies>

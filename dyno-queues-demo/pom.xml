@@ -27,6 +27,12 @@
             <groupId>com.netflix.dyno</groupId>
             <artifactId>dyno-core</artifactId>
             <version>1.5.9</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.netflix.dyno/dyno-jedis -->
@@ -50,6 +56,10 @@
                 <exclusion>
                     <artifactId>archaius-core</artifactId>
                     <groupId>com.netflix.archaius</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>slf4j-log4j12</artifactId>
+                    <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -102,6 +112,10 @@
                 <exclusion>
                     <artifactId>archaius-core</artifactId>
                     <groupId>com.netflix.archaius</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>servlet-api</artifactId>
+                    <groupId>javax.servlet</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

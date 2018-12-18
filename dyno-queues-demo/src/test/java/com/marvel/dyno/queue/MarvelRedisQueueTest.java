@@ -6,7 +6,6 @@ package com.marvel.dyno.queue;
 import com.marvel.dyno.domain.DelayMessageDO;
 import com.marvel.dyno.marvel.queue.MarvelDelayQueue;
 import com.marvel.dyno.marvel.queue.impl.MarvelRedisQueue;
-import com.marvel.dyno.redis.JedisServer;
 import org.assertj.core.util.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +15,6 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * MarvelRedisQueueTest

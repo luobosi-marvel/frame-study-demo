@@ -173,6 +173,11 @@ public class MarvelRedisQueue implements MarvelDelayQueue {
     }
 
     @Override
+    public Long peek(int start, int stop) {
+        return null;
+    }
+
+    @Override
     public List<DelayMessageDO> peek(int messageCount) {
         if (messageCount < 1) {
             return Collections.emptyList();

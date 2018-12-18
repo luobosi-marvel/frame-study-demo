@@ -40,6 +40,7 @@ public interface MarvelDelayQueue extends Closeable {
      */
     List<String> push(List<DelayMessageDO> messages);
 
+
     /**
      * @param messageCount 要从队列弹出的消息数
      * @param wait         如果队列中没有消息则等待的时间量
@@ -50,6 +51,14 @@ public interface MarvelDelayQueue extends Closeable {
      * @see #getUnackTime()
      */
     List<DelayMessageDO> pop(int messageCount, int wait, TimeUnit unit);
+
+    /**
+     *
+     * @param start
+     * @param stop
+     * @return
+     */
+    Long peek(int start, int stop);
 
     /**
      * 提供队列，而不会将消息传出。
