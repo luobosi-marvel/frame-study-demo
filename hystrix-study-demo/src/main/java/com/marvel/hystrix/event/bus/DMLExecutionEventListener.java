@@ -18,8 +18,12 @@ public class DMLExecutionEventListener {
 
     @Subscribe
     @AllowConcurrentEvents
-    public void listener(final DMLExecutionEvent event) {
-        System.out.println("监听的DML执行事件: " + JSON.toJSONString(event));
+    public void add(final DMLExecutionEvent event) {
+        System.out.println("监听的添加执行事件: " + JSON.toJSONString(event));
         // do something
+    }
+
+    public void update(final DMLExecutionEvent event) {
+
     }
 }
