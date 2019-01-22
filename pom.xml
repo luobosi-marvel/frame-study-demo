@@ -28,6 +28,7 @@
         <module>delay-queue-demo</module>
         <module>marvel-redis</module>
         <module>time-wheel-demo</module>
+        <module>fel-study-demo</module>
     </modules>
 
     <dependencies>
